@@ -54,9 +54,33 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Skip service worker and manifest files
+  if (url.pathname.includes('/sw.js') || url.pathname.includes('/manifest.json')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
-      // Return cached version if available
+      // For HTML requests, always try network first to get latest version
+      if (request.headers.get('accept')?.includes('text/html')) {
+        return fetch(request)
+          .then((response) => {
+            // Cache successful HTML responses
+            if (response && response.status === 200 && response.type === 'basic') {
+              const responseToCache = response.clone();
+              caches.open(DYNAMIC_CACHE_NAME).then((cache) => {
+                cache.put(request, responseToCache);
+              });
+            }
+            return response;
+          })
+          .catch(() => {
+            // Fallback to cache if network fails
+            return cachedResponse || caches.match('/index.html');
+          });
+      }
+
+      // For other assets, use cache first strategy
       if (cachedResponse) {
         return cachedResponse;
       }
@@ -81,7 +105,7 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => {
           // Return offline page if available
-          if (request.headers.get('accept').includes('text/html')) {
+          if (request.headers.get('accept')?.includes('text/html')) {
             return caches.match('/index.html');
           }
         });
