@@ -7,10 +7,6 @@ const DYNAMIC_CACHE_NAME = 'agency-dynamic-v1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/src/main.tsx',
-  '/src/app/App.tsx',
-  '/src/app/components/Header.tsx',
-  '/src/app/components/Hero.tsx',
 ];
 
 // Install event - cache static assets

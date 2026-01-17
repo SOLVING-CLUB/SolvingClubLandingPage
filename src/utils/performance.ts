@@ -4,12 +4,8 @@
  * Preload critical resources
  */
 export function preloadResources() {
-  // Preload critical CSS
-  const link = document.createElement('link');
-  link.rel = 'preload';
-  link.as = 'style';
-  link.href = '/src/styles/index.css';
-  document.head.appendChild(link);
+  // Preload will be handled by Vite in production
+  // No manual preloading needed
 }
 
 /**
@@ -64,10 +60,10 @@ export function initPerformanceOptimizations() {
   prefetchPages();
   
   // Register service worker if available
-  if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
     window.addEventListener('load', () => {
       navigator.serviceWorker
-        .register('/sw.js')
+        .register('./sw.js')
         .then(() => console.log('Service Worker registered'))
         .catch(err => console.log('Service Worker registration failed:', err));
     });

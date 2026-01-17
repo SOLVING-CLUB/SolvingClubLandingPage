@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  base: './', // Use relative paths for deployment
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
@@ -22,6 +23,10 @@ export default defineConfig({
   },
   build: {
     // Optimize build for performance
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false, // Disable sourcemaps for production
+    emptyOutDir: true, // Clean output directory before build
     rollupOptions: {
       output: {
         manualChunks: {
@@ -29,6 +34,10 @@ export default defineConfig({
           'vendor-motion': ['motion/react'],
           'vendor-icons': ['lucide-react'],
         },
+        // Ensure consistent chunk naming
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
     // Enable chunk size warnings
@@ -37,7 +46,10 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     // Minify (use esbuild which is faster and built-in)
     minify: 'esbuild',
+    // Target modern browsers
+    target: 'es2015',
   },
+  publicDir: 'public', // Ensure public files are copied to dist
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom', 'motion/react', 'lucide-react'],
