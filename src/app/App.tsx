@@ -5,55 +5,13 @@ import { Hero } from '@/app/components/Hero';
 import { initPerformanceOptimizations } from '@/utils/performance';
 import { useIsMobile } from '@/app/components/ui/use-mobile';
 
-// Lazy load components for better performance with error handling
-const Services = lazy(() => 
-  import('@/app/components/Services')
-    .then(module => ({ default: module.Services }))
-    .catch(err => {
-      console.error('Failed to load Services:', err);
-      return { default: () => <div className="min-h-screen flex items-center justify-center"><p>Failed to load Services</p></div> };
-    })
-);
-const Work = lazy(() => 
-  import('@/app/components/Work')
-    .then(module => ({ default: module.Work }))
-    .catch(err => {
-      console.error('Failed to load Work:', err);
-      return { default: () => <div className="min-h-screen flex items-center justify-center"><p>Failed to load Work</p></div> };
-    })
-);
-const About = lazy(() => 
-  import('@/app/components/About')
-    .then(module => ({ default: module.About }))
-    .catch(err => {
-      console.error('Failed to load About:', err);
-      return { default: () => <div className="min-h-screen flex items-center justify-center"><p>Failed to load About</p></div> };
-    })
-);
-const Team = lazy(() => 
-  import('@/app/components/Team')
-    .then(module => ({ default: module.Team }))
-    .catch(err => {
-      console.error('Failed to load Team:', err);
-      return { default: () => <div className="min-h-screen flex items-center justify-center"><p>Failed to load Team</p></div> };
-    })
-);
-const Contact = lazy(() => 
-  import('@/app/components/Contact')
-    .then(module => ({ default: module.Contact }))
-    .catch(err => {
-      console.error('Failed to load Contact:', err);
-      return { default: () => <div className="min-h-screen flex items-center justify-center"><p>Failed to load Contact</p></div> };
-    })
-);
-const Footer = lazy(() => 
-  import('@/app/components/Footer')
-    .then(module => ({ default: module.Footer }))
-    .catch(err => {
-      console.error('Failed to load Footer:', err);
-      return { default: () => <div className="min-h-screen flex items-center justify-center"><p>Failed to load Footer</p></div> };
-    })
-);
+// Lazy load components for better performance
+const Services = lazy(() => import('@/app/components/Services').then(module => ({ default: module.Services })));
+const Work = lazy(() => import('@/app/components/Work').then(module => ({ default: module.Work })));
+const About = lazy(() => import('@/app/components/About').then(module => ({ default: module.About })));
+const Team = lazy(() => import('@/app/components/Team').then(module => ({ default: module.Team })));
+const Contact = lazy(() => import('@/app/components/Contact').then(module => ({ default: module.Contact })));
+const Footer = lazy(() => import('@/app/components/Footer').then(module => ({ default: module.Footer })));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -65,48 +23,23 @@ const LoadingFallback = () => (
 export default function App() {
   const isMobile = useIsMobile();
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    try {
-      // Add dark class to html element for dark theme
-      document.documentElement.classList.add('dark');
-      
-      // Check for reduced motion preference
-      if (typeof window !== 'undefined' && window.matchMedia) {
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        setPrefersReducedMotion(mediaQuery.matches);
-        
-        const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-        mediaQuery.addEventListener('change', handleChange);
-        
-        // Initialize performance optimizations
-        initPerformanceOptimizations();
-        
-        return () => mediaQuery.removeEventListener('change', handleChange);
-      }
-    } catch (error) {
-      console.error('App initialization error:', error);
-      setHasError(true);
-    }
+    // Add dark class to html element for dark theme
+    document.documentElement.classList.add('dark');
+    
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    
+    // Initialize performance optimizations
+    initPerformanceOptimizations();
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
-
-  if (hasError) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
-          <p className="text-muted-foreground mb-4">Please refresh the page.</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-6 py-3 bg-primary text-primary-foreground rounded-full"
-          >
-            Refresh Page
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   // Reduce animations on mobile or if user prefers reduced motion
   const shouldReduceMotion = isMobile || prefersReducedMotion;

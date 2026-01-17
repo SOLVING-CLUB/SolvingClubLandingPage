@@ -4,8 +4,8 @@
  * Preload critical resources
  */
 export function preloadResources() {
-  // Preload will be handled by Vite in production
-  // No manual preloading needed
+  // CSS is already loaded via import, no need to preload
+  // This function is kept for future use if needed
 }
 
 /**
@@ -59,23 +59,13 @@ export function initPerformanceOptimizations() {
   // Prefetch likely pages
   prefetchPages();
   
-  // Register service worker if available (only in production)
-  if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-    // Check if we're in production build
-    const isProduction = window.location.hostname !== 'localhost' && 
-                        window.location.hostname !== '127.0.0.1' &&
-                        !window.location.hostname.includes('localhost');
-    
-    if (isProduction) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/sw.js')
-          .then(() => console.log('Service Worker registered'))
-          .catch(err => {
-            console.log('Service Worker registration failed:', err);
-            // Don't block app if service worker fails
-          });
-      });
-    }
+  // Register service worker if available
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then(() => console.log('Service Worker registered'))
+        .catch(err => console.log('Service Worker registration failed:', err));
+    });
   }
 }
