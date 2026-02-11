@@ -4,6 +4,7 @@ import { Header } from '@/app/components/Header';
 import { Hero } from '@/app/components/Hero';
 import { initPerformanceOptimizations } from '@/utils/performance';
 import { useIsMobile } from '@/app/components/ui/use-mobile';
+import { FeaturedProjects } from '@/app/components/FeaturedProjects';
 
 // Lazy load components for better performance
 const Services = lazy(() => import('@/app/components/Services').then(module => ({ default: module.Services })));
@@ -23,6 +24,7 @@ const LoadingFallback = () => (
 export default function App() {
   const isMobile = useIsMobile();
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'projects'>('home');
 
   useEffect(() => {
     // Add dark class to html element for dark theme
@@ -229,16 +231,22 @@ export default function App() {
 
       {/* Content */}
       <div className="relative z-0">
-        <Header />
+        <Header onNavigate={setCurrentPage} />
         <main>
-          <Hero />
-          <Suspense fallback={<LoadingFallback />}>
-            <Services />
-            <Work />
-            <About />
-            <Team />
-            <Contact />
-          </Suspense>
+          {currentPage === 'home' ? (
+            <>
+              <Hero />
+              <Suspense fallback={<LoadingFallback />}>
+                <Services />
+                <Work />
+                <About />
+                <Team />
+                <Contact />
+              </Suspense>
+            </>
+          ) : (
+            <FeaturedProjects />
+          )}
         </main>
         <Suspense fallback={null}>
           <Footer />

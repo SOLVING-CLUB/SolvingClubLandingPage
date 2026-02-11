@@ -6,7 +6,11 @@ import { HoveredLink, Menu, MenuItem } from '@/app/components/ui/navbar-menu';
 import { handleAnchorClick } from '@/app/components/ui/utils';
 import { cn } from '@/app/components/ui/utils';
 
-export function Header() {
+type HeaderProps = {
+  onNavigate?: (page: 'home' | 'projects') => void;
+};
+
+export function Header({ onNavigate }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
 
@@ -26,6 +30,7 @@ export function Header() {
           href="#"
             onClick={(e) => {
               e.preventDefault();
+              onNavigate?.('home');
               window.scrollTo({ top: 0, behavior: 'auto' });
             }}
           className="fixed top-4 left-8 z-50 text-xl sm:text-2xl font-bold tracking-tight"
@@ -93,18 +98,20 @@ export function Header() {
             <MenuItem setActive={setActive} active={active} item="Work">
               <div className="flex flex-col space-y-2 text-sm">
                 <HoveredLink 
-                  href="#work"
+                  href="#"
                   onClick={(e) => {
-                    handleAnchorClick(e, '#work');
+                    e.preventDefault();
+                    onNavigate?.('projects');
                     setActive(null);
                   }}
                 >
                   View Portfolio
                 </HoveredLink>
                 <HoveredLink 
-                  href="#work"
+                  href="#"
                   onClick={(e) => {
-                    handleAnchorClick(e, '#work');
+                    e.preventDefault();
+                    onNavigate?.('projects');
                     setActive(null);
                   }}
                 >
@@ -147,6 +154,7 @@ export function Header() {
               href="#"
             onClick={(e) => {
               e.preventDefault();
+              onNavigate?.('home');
               window.scrollTo({ top: 0, behavior: 'auto' });
             }}
               className="text-xl sm:text-2xl font-bold tracking-tight"
@@ -185,10 +193,11 @@ export function Header() {
                   Services
                 </a>
                 <a
-                  href="#work"
+                href="#"
                   className="text-muted-foreground hover:text-foreground transition-colors py-2"
                   onClick={(e) => {
-                    handleAnchorClick(e, '#work');
+                  e.preventDefault();
+                  onNavigate?.('projects');
                     setIsMobileMenuOpen(false);
                   }}
                 >

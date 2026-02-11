@@ -7,51 +7,59 @@ import { handleAnchorClick } from '@/app/components/ui/utils';
 const projects = [
   {
     id: 1,
-    title: 'E-Commerce Platform',
-    category: 'Web Development',
-    description: 'A modern e-commerce platform with seamless user experience',
-    tags: ['React', 'Node.js', 'Stripe'],
-    imageQuery: 'ecommerce website'
+    title: 'TRAVEL TOGETHER',
+    category: 'MOBILE APP - ANDROID',
+    description: 'Client: PRASAD',
+    tags: [],
+    imageQuery: 'travel mobile app'
   },
   {
     id: 2,
-    title: 'Brand Identity System',
-    category: 'Branding & Design',
-    description: 'Complete brand redesign for a sustainable fashion startup',
-    tags: ['Branding', 'UI/UX', 'Print'],
-    imageQuery: 'brand identity design'
+    title: 'SARAL EVENTS',
+    category: '2 MOBILE APPS - ANDROID, 1 WEB APP, 1 WEBSITE',
+    description: 'Client: SARAL EVENTS',
+    tags: [],
+    imageQuery: 'event management app'
   },
   {
     id: 3,
-    title: 'Mobile Fitness App',
-    category: 'Mobile Development',
-    description: 'AI-powered fitness tracking and workout planning app',
-    tags: ['React Native', 'AI', 'Health'],
-    imageQuery: 'fitness mobile app'
+    title: 'TUVO',
+    category: 'WEB APP',
+    description: 'Client: MITHUN CHAKRAVARTHI',
+    tags: [],
+    imageQuery: 'web application interface'
   },
   {
     id: 4,
-    title: 'SaaS Dashboard',
-    category: 'Web Design',
-    description: 'Intuitive analytics dashboard for SaaS businesses',
-    tags: ['UI/UX', 'Data Viz', 'SaaS'],
-    imageQuery: 'saas dashboard interface'
+    title: 'PLATTR',
+    category: 'CAPACITOR APP - ANDROID, IOS',
+    description: 'Client: HOSTIFY TECHNOLOGIES PVT. LTD',
+    tags: [],
+    imageQuery: 'mobile app interface'
   },
   {
     id: 5,
-    title: 'Marketing Campaign',
-    category: 'Digital Marketing',
-    description: 'Multi-channel campaign that increased engagement by 300%',
-    tags: ['Social Media', 'Content', 'Ads'],
-    imageQuery: 'digital marketing campaign'
+    title: 'PRANARAS ACADEMY',
+    category: 'WEBSITE',
+    description: 'Client: RAHUL',
+    tags: [],
+    imageQuery: 'education website design'
   },
   {
     id: 6,
-    title: 'AR Experience',
-    category: 'Interactive',
-    description: 'Immersive augmented reality product showcase',
-    tags: ['AR', '3D', 'WebGL'],
-    imageQuery: 'augmented reality experience'
+    title: 'RELAI WORLD',
+    category: 'WEBSITE',
+    description: 'Client: RELAI WORLD PVT. LTD',
+    tags: [],
+    imageQuery: 'corporate website design'
+  },
+  {
+    id: 7,
+    title: 'JOBSNEXT',
+    category: 'MOBILE APP - ANDROID, IOS',
+    description: 'Client: ABSOLVE IT&HR PVT.LTD',
+    tags: [],
+    imageQuery: 'job search mobile app'
   }
 ];
 
