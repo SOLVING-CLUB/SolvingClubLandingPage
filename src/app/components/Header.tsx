@@ -1,18 +1,16 @@
 "use client";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu as MenuIcon, X } from 'lucide-react';
 import { HoveredLink, Menu, MenuItem } from '@/app/components/ui/navbar-menu';
 import { handleAnchorClick } from '@/app/components/ui/utils';
 import { cn } from '@/app/components/ui/utils';
 
-type HeaderProps = {
-  onNavigate?: (page: 'home' | 'projects') => void;
-};
-
-export function Header({ onNavigate }: HeaderProps) {
+export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   return (
     <motion.header
@@ -30,7 +28,7 @@ export function Header({ onNavigate }: HeaderProps) {
           href="#"
             onClick={(e) => {
               e.preventDefault();
-              onNavigate?.('home');
+              navigate('/');
               window.scrollTo({ top: 0, behavior: 'auto' });
             }}
           className="fixed top-4 left-8 z-50 text-xl sm:text-2xl font-bold tracking-tight"
@@ -95,30 +93,20 @@ export function Header({ onNavigate }: HeaderProps) {
               </div>
             </MenuItem>
             
-            <MenuItem setActive={setActive} active={active} item="Work">
-              <div className="flex flex-col space-y-2 text-sm">
-                <HoveredLink 
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate?.('projects');
-                    setActive(null);
-                  }}
-                >
-                  View Portfolio
-                </HoveredLink>
-                <HoveredLink 
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate?.('projects');
-                    setActive(null);
-                  }}
-                >
-                  Featured Projects
-                </HoveredLink>
-              </div>
-            </MenuItem>
+            {/* Work: no dropdown on hover, click navigates to projects */}
+            <div className="relative">
+              <motion.p
+                transition={{ duration: 0.3 }}
+                className="cursor-pointer text-foreground hover:opacity-[0.9] text-sm lg:text-base font-medium"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/projects');
+                  setActive(null);
+                }}
+              >
+                Work
+              </motion.p>
+            </div>
             
             <MenuItem setActive={setActive} active={active} item="About">
               <div className="flex flex-col space-y-2 text-sm">
@@ -154,7 +142,7 @@ export function Header({ onNavigate }: HeaderProps) {
               href="#"
             onClick={(e) => {
               e.preventDefault();
-              onNavigate?.('home');
+              navigate('/');
               window.scrollTo({ top: 0, behavior: 'auto' });
             }}
               className="text-xl sm:text-2xl font-bold tracking-tight"
@@ -197,7 +185,7 @@ export function Header({ onNavigate }: HeaderProps) {
                   className="text-muted-foreground hover:text-foreground transition-colors py-2"
                   onClick={(e) => {
                   e.preventDefault();
-                  onNavigate?.('projects');
+                  navigate('/projects');
                     setIsMobileMenuOpen(false);
                   }}
                 >

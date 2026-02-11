@@ -1,19 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { cn } from '@/app/components/ui/utils';
-
-type ProjectCategory = 'All' | 'Mobile App' | 'Web App' | 'Website' | 'Multi Platform' | 'Timeline';
-
-type Project = {
-  id: number;
-  title: string;
-  subtitle: string;
-  category: ProjectCategory;
-  team: string;
-  date: string;
-  badge: string;
-  description: string;
-};
+import { projects, ProjectCategory } from '@/app/data/projects';
 
 const filters: { label: string; value: ProjectCategory }[] = [
   { label: 'All Projects', value: 'All' },
@@ -24,95 +13,14 @@ const filters: { label: string; value: ProjectCategory }[] = [
   { label: 'Timeline', value: 'Timeline' },
 ];
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'TRAVEL TOGETHER',
-    subtitle: 'Mobile App - Android',
-    category: 'Mobile App',
-    team: 'Team: 1',
-    date: 'Client: PRASAD',
-    badge: 'Client Project',
-    description:
-      'Android app that helps groups plan trips together, coordinate itineraries, and stay organised during travel.',
-  },
-  {
-    id: 2,
-    title: 'SARAL EVENTS',
-    subtitle: '2 Mobile Apps, 1 Web App, 1 Website',
-    category: 'Multi Platform',
-    team: 'Team: 1',
-    date: 'Client: SARAL EVENTS',
-    badge: 'Multi Platform',
-    description:
-      'End‑to‑end solution for event management with Android apps, web app, and marketing website for organisers and attendees.',
-  },
-  {
-    id: 3,
-    title: 'TUVO',
-    subtitle: 'Ticket Booking Platform',
-    category: 'Web App',
-    team: 'Team: 1',
-    date: 'Client: MITHUN CHAKRAVARTHI',
-    badge: 'Client Project',
-    description:
-      'Full‑stack ticket booking web application with secure payments, QR‑based tickets, and automated confirmations.',
-  },
-  {
-    id: 4,
-    title: 'PLATTR',
-    subtitle: 'Capacitor App - Android, iOS',
-    category: 'Mobile App',
-    team: 'Team: 2',
-    date: 'Client: HOSTIFY TECHNOLOGIES PVT.LTD',
-    badge: 'Client Project',
-    description:
-      'Cross‑platform Capacitor app for hospitality businesses, streamlining operations and property management on Android and iOS.',
-  },
-  {
-    id: 5,
-    title: 'PRANARAS ACADEMY',
-    subtitle: 'Academy Website',
-    category: 'Website',
-    team: 'Team: 1',
-    date: 'Client: RAHUL',
-    badge: 'Client Project',
-    description:
-      'Responsive website for Pranaras Academy to showcase courses, programs, and student outcomes.',
-  },
-  {
-    id: 6,
-    title: 'RELAI WORLD',
-    subtitle: 'Corporate Website',
-    category: 'Website',
-    team: 'Team: 1',
-    date: 'Client: RELAI WORLD PVT.LTD',
-    badge: 'Client Project',
-    description:
-      'Corporate website for Relai World to present services, brand story, and contact channels.',
-  },
-  {
-    id: 7,
-    title: 'JOBSNEXT',
-    subtitle: 'Job Search Mobile App - Android, iOS',
-    category: 'Mobile App',
-    team: 'Team: 2',
-    date: 'Client: ABSOLVE IT&HR PVT.LTD',
-    badge: 'Client Project',
-    description:
-      'Mobile app for job seekers with job listings, search, and notifications, built for Android and iOS.',
-  },
-];
-
 export function FeaturedProjects() {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>('All');
 
   const filteredProjects =
     activeFilter === 'All'
       ? projects
       : projects.filter((project) => project.category === activeFilter);
-
-  const activeProject = filteredProjects[0] ?? projects[0];
 
   return (
     <section
@@ -148,76 +56,141 @@ export function FeaturedProjects() {
           ))}
         </div>
 
-        {/* Layout similar to reference: image / content */}
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,_1.3fr)_minmax(0,_2fr)] items-stretch">
-          {/* Placeholder visual panel */}
-          <motion.div
-            className="relative rounded-2xl bg-gradient-to-br from-slate-800 via-slate-900 to-black border border-border overflow-hidden min-h-[260px]"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(148,163,253,0.3),transparent_55%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(56,189,248,0.25),transparent_55%)] mix-blend-screen" />
+        {/* Project cards */}
+        <div className="space-y-8">
+          {filteredProjects.map((project) => {
+            const isWeb =
+              project.category === 'Web App' ||
+              project.category === 'Website' ||
+              project.category === 'Multi Platform';
 
-            <div className="relative h-full flex flex-col justify-between p-6 sm:p-8">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-300/70 mb-3">
-                  Featured Project
-                </p>
-                <h3 className="text-2xl sm:text-3xl font-semibold text-white">
-                  {activeProject.title}
-                </h3>
-                <p className="text-sm text-slate-300/80 mt-1">
-                  {activeProject.subtitle}
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 mt-6">
-                <span className="inline-flex items-center rounded-full bg-black/40 px-3 py-1 text-xs text-slate-200 border border-white/10">
-                  {activeProject.team}
-                </span>
-                <span className="inline-flex items-center rounded-full bg-black/40 px-3 py-1 text-xs text-slate-200 border border-white/10">
-                  {activeProject.date}
-                </span>
-                <span className="inline-flex items-center rounded-full bg-amber-500/90 px-3 py-1 text-xs text-black font-medium">
-                  {activeProject.badge}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Projects list */}
-          <div className="space-y-4">
-            {filteredProjects.map((project) => (
+            return (
               <motion.article
                 key={project.id}
                 className={cn(
-                  'rounded-2xl border bg-card/70 backdrop-blur-sm p-5 sm:p-6 cursor-pointer transition-all',
-                  project.id === activeProject.id
-                    ? 'border-primary/80 shadow-lg shadow-primary/20'
-                    : 'border-border hover:border-primary/60 hover:bg-card'
+                  'rounded-2xl border bg-card/80 backdrop-blur-sm p-4 sm:p-6 lg:p-8 shadow-sm',
+                  'transition-all hover:shadow-xl hover:border-primary/70'
                 )}
-                onMouseEnter={() => setActiveFilter(project.category)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
               >
-                <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-                  <h3 className="text-lg sm:text-xl font-semibold">
-                    {project.title} –{' '}
-                    <span className="text-muted-foreground">
-                      {project.subtitle}
-                    </span>
-                  </h3>
-                  <span className="inline-flex rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
-                    {project.category === 'All' ? 'Mixed' : project.category}
-                  </span>
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,_1.1fr)_minmax(0,_1.9fr)] items-stretch">
+                  {/* Left: visual preview */}
+                  <div className="relative flex items-center justify-center">
+                    {isWeb ? (
+                      <div className="w-full max-w-md rounded-xl border border-border bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 shadow-lg overflow-hidden">
+                        {/* Browser header */}
+                        <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-slate-900/80">
+                          <div className="flex gap-1.5">
+                            <span className="w-3 h-3 rounded-full bg-red-500/80" />
+                            <span className="w-3 h-3 rounded-full bg-amber-400/80" />
+                            <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                          </div>
+                          <div className="ml-3 h-6 flex-1 rounded-md bg-slate-800/80" />
+                        </div>
+                        {/* Browser body */}
+                        <div className="aspect-[16/10] bg-slate-950/80 flex items-center justify-center">
+                          <p className="text-xs sm:text-sm text-muted-foreground">
+                            Project Preview
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-full max-w-xs mx-auto rounded-[2rem] border border-border bg-gradient-to-b from-slate-900 to-black shadow-xl flex items-center justify-center aspect-[9/19]">
+                        <div className="w-[88%] h-[88%] rounded-[1.6rem] bg-slate-950/90 border border-slate-700/60 flex items-center justify-center">
+                          <p className="text-xs sm:text-sm text-muted-foreground text-center px-4">
+                            {project.title}
+                            <br />
+                            <span className="text-[11px] text-muted-foreground/80">
+                              Project Preview
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right: content */}
+                  <div className="flex flex-col justify-between gap-4">
+                    <div className="space-y-3">
+                      {/* Meta row */}
+                      <div className="flex flex-wrap items-center gap-3 text-[11px] sm:text-xs text-muted-foreground">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                          Team {project.team.replace('Team: ', '')}
+                        </span>
+                        <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1">
+                          {project.date}
+                        </span>
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/90 px-3 py-1 text-[11px] font-medium text-black">
+                          {project.projectType || project.badge}
+                        </span>
+                      </div>
+
+                      {/* Title & description */}
+                      <div className="space-y-2">
+                        <h3 className="text-xl sm:text-2xl font-semibold">
+                          {project.title}{' '}
+                          <span className="font-normal text-muted-foreground">
+                            – {project.subtitle}
+                          </span>
+                        </h3>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
+
+                      {/* Technologies */}
+                      {project.technologies && project.technologies.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {project.technologies.map((tech) => (
+                            <span
+                              key={tech}
+                              className="inline-flex items-center rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium border border-primary/20"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex flex-wrap items-center gap-3 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/projects/${project.id}`)}
+                        className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-xs sm:text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                      >
+                        View Details
+                      </button>
+
+                      {/* Placeholder GitHub button (no URL yet) */}
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center rounded-full border border-border px-4 py-2 text-xs sm:text-sm font-medium text-muted-foreground hover:bg-muted/60 transition-colors"
+                      >
+                        GitHub
+                      </button>
+
+                      {project.liveSiteUrl && project.liveSiteUrl !== '#' && (
+                        <a
+                          href={project.liveSiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center rounded-full border border-emerald-500/80 bg-emerald-500/10 px-4 py-2 text-xs sm:text-sm font-medium text-emerald-300 hover:bg-emerald-500/20 transition-colors"
+                        >
+                          View Live Project
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  {project.description}
-                </p>
               </motion.article>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
