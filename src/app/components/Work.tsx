@@ -1,65 +1,36 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import { handleAnchorClick } from '@/app/components/ui/utils';
 
 const projects = [
   {
     id: 1,
-    title: 'TRAVEL TOGETHER',
-    category: 'MOBILE APP - ANDROID',
-    description: 'Client: PRASAD',
-    tags: [],
-    imageQuery: 'travel mobile app'
-  },
-  {
-    id: 2,
     title: 'SARAL EVENTS',
-    category: '2 MOBILE APPS - ANDROID, 1 WEB APP, 1 WEBSITE',
-    description: 'Client: SARAL EVENTS',
-    tags: [],
+    category: 'EVENT PLATFORM · WEB & MOBILE',
+    description:
+      'End-to-end event management ecosystem including website, admin portal, user app, and vendor app for Saral Events.',
+    tags: ['Web App', 'Mobile App', 'Event Management'],
     imageQuery: 'event management app'
   },
   {
-    id: 3,
+    id: 2,
     title: 'TUVO',
-    category: 'WEB APP',
-    description: 'Client: MITHUN CHAKRAVARTHI',
-    tags: [],
-    imageQuery: 'web application interface'
+    category: 'WEB APP · TICKETING',
+    description:
+      'Full-stack ticket booking platform with secure PayU payments, QR-code tickets, and a powerful admin dashboard.',
+    tags: ['Next.js', 'TypeScript', 'PayU'],
+    imageQuery: 'ticket booking web app'
   },
   {
-    id: 4,
+    id: 3,
     title: 'PLATTR',
-    category: 'CAPACITOR APP - ANDROID, IOS',
-    description: 'Client: HOSTIFY TECHNOLOGIES PVT. LTD',
-    tags: [],
-    imageQuery: 'mobile app interface'
-  },
-  {
-    id: 5,
-    title: 'PRANARAS ACADEMY',
-    category: 'WEBSITE',
-    description: 'Client: RAHUL',
-    tags: [],
-    imageQuery: 'education website design'
-  },
-  {
-    id: 6,
-    title: 'RELAI WORLD',
-    category: 'WEBSITE',
-    description: 'Client: RELAI WORLD PVT. LTD',
-    tags: [],
-    imageQuery: 'corporate website design'
-  },
-  {
-    id: 7,
-    title: 'JOBSNEXT',
-    category: 'MOBILE APP - ANDROID, IOS',
-    description: 'Client: ABSOLVE IT&HR PVT.LTD',
-    tags: [],
-    imageQuery: 'job search mobile app'
+    category: 'CROSS-PLATFORM · HOSPITALITY',
+    description:
+      'Cross-platform hospitality app built with Capacitor, running on web, Android, and iOS for property operations.',
+    tags: ['Capacitor', 'React', 'Supabase'],
+    imageQuery: 'hospitality management app'
   }
 ];
 
@@ -132,6 +103,8 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
 }
 
 export function Work() {
+  const navigate = useNavigate();
+
   return (
     <section id="work" className="min-h-[100vh] min-h-[100dvh] py-16 sm:py-24 lg:py-32 relative overflow-hidden bg-muted/30 flex flex-col justify-center">
       <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
@@ -180,16 +153,16 @@ export function Work() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0 }}
         >
-          <motion.a
-            href="#contact"
-            onClick={(e) => handleAnchorClick(e, '#contact')}
+          <motion.button
+            type="button"
+            onClick={() => navigate('/projects')}
             className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 text-sm sm:text-base"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             View All Projects
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-          </motion.a>
+          </motion.button>
         </motion.div>
       </div>
     </section>

@@ -34,7 +34,7 @@ export function ProjectDetail() {
   return (
     <div className="min-h-[100vh] min-h-[100dvh] bg-background">
       <Header />
-      <section className="pt-24 pb-16 sm:py-24 lg:py-32">
+      <section className="pt-16 pb-16 sm:py-20 lg:py-28">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Back Button */}
         <motion.button

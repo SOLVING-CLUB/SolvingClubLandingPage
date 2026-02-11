@@ -3,8 +3,10 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import App from "./app/App.tsx";
-import { FeaturedProjects } from "@/app/components/FeaturedProjects";
 import { ProjectDetail } from "@/app/components/ProjectDetail";
+import { AboutPage } from "@/app/components/AboutPage";
+import { ContactPage } from "@/app/components/ContactPage";
+import { ProjectsPage } from "@/app/components/ProjectsPage";
 import "./styles/index.css";
 
 function ScrollToTop() {
@@ -22,8 +24,10 @@ createRoot(document.getElementById("root")!).render(
     <ScrollToTop />
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/projects" element={<FeaturedProjects />} />
+      <Route path="/projects" element={<ProjectsPage />} />
       <Route path="/projects/:id" element={<ProjectDetail />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactPage />} />
     </Routes>
   </BrowserRouter>
 );

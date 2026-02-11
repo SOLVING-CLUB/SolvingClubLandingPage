@@ -235,9 +235,6 @@ export default function App() {
           <Suspense fallback={<LoadingFallback />}>
             <Services />
             <Work />
-            <About />
-            <Team />
-            <Contact />
           </Suspense>
         </main>
         <Suspense fallback={null}>

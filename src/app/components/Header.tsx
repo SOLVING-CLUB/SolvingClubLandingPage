@@ -1,27 +1,42 @@
 "use client";
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, type ComponentType } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu as MenuIcon, X } from 'lucide-react';
-import { HoveredLink, Menu, MenuItem } from '@/app/components/ui/navbar-menu';
+import { Menu as MenuIcon, X, Home, Folder, User, Mail } from 'lucide-react';
 import { handleAnchorClick } from '@/app/components/ui/utils';
 import { cn } from '@/app/components/ui/utils';
 
+type NavItem = {
+  label: string;
+  path: string;
+  icon: ComponentType<{ className?: string }>;
+};
+
+const NAV_ITEMS: NavItem[] = [
+  { label: 'Home', path: '/', icon: Home },
+  { label: 'Projects', path: '/projects', icon: Folder },
+  { label: 'About us', path: '/about', icon: User },
+  { label: 'Contact', path: '/contact', icon: Mail },
+];
+
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActivePath = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <motion.header
+    <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 bg-background/80 border-b border-border"
       )}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      {/* Desktop Navigation - Aceternity Navbar */}
+      {/* Desktop Navigation */}
       <div className="hidden md:block">
         {/* Logo - Fixed Top Left */}
         <motion.a 
@@ -39,98 +54,65 @@ export function Header() {
         </motion.a>
         
         {/* Let's Talk Button - Fixed Top Right */}
-        <motion.a
-          href="#contact"
-          onClick={(e) => handleAnchorClick(e, '#contact')}
+        <motion.button
+          onClick={() => navigate('/contact')}
           className="fixed top-4 right-8 z-50 px-4 lg:px-6 py-2 sm:py-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 text-sm lg:text-base"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           Let's Talk
-        </motion.a>
+        </motion.button>
         
-        {/* Centered Navbar Menu */}
+        {/* Centered Glassmorphism Navbar */}
         <div className={cn("fixed top-4 left-1/2 -translate-x-1/2 z-50")}>
-          <Menu setActive={setActive}>
-            <MenuItem setActive={setActive} active={active} item="Services">
-              <div className="flex flex-col space-y-2 text-sm">
-                <HoveredLink 
-                  href="#services"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#services');
-                    setActive(null);
-                  }}
+          <nav
+            className="flex items-center gap-6 px-4 py-2 rounded-full bg-white/5 border border-white/10 shadow-[0_18px_45px_rgba(0,0,0,0.65)] backdrop-blur-xl"
+          >
+            {NAV_ITEMS.map((item, index) => {
+              const Icon = item.icon;
+              const active = isActivePath(item.path);
+              const isHovered = hoveredIndex === index && !active;
+
+              return (
+                <button
+                  key={item.path}
+                  type="button"
+                  onClick={() => navigate(item.path)}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className={cn(
+                    'relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300',
+                    active ? 'text-black' : 'text-muted-foreground/90'
+                  )}
                 >
-                  All Services
-                </HoveredLink>
-                <HoveredLink 
-                  href="#services"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#services');
-                    setActive(null);
-                  }}
-                >
-                  Web Development
-                </HoveredLink>
-                <HoveredLink 
-                  href="#services"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#services');
-                    setActive(null);
-                  }}
-                >
-                  Design & Branding
-                </HoveredLink>
-                <HoveredLink 
-                  href="#services"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#services');
-                    setActive(null);
-                  }}
-                >
-                  Marketing
-                </HoveredLink>
-              </div>
-            </MenuItem>
-            
-            {/* Work: no dropdown on hover, click navigates to projects */}
-            <div className="relative">
-              <motion.p
-                transition={{ duration: 0.3 }}
-                className="cursor-pointer text-foreground hover:opacity-[0.9] text-sm lg:text-base font-medium"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate('/projects');
-                  setActive(null);
-                }}
-              >
-                Work
-              </motion.p>
-            </div>
-            
-            <MenuItem setActive={setActive} active={active} item="About">
-              <div className="flex flex-col space-y-2 text-sm">
-                <HoveredLink 
-                  href="#about"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#about');
-                    setActive(null);
-                  }}
-                >
-                  Our Story
-                </HoveredLink>
-                <HoveredLink 
-                  href="#team"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#team');
-                    setActive(null);
-                  }}
-                >
-                  Meet the Team
-                </HoveredLink>
-              </div>
-            </MenuItem>
-          </Menu>
+                  {/* Moving glossy hover pill (slides smoothly between items) */}
+                  {isHovered && (
+                    <motion.span
+                      layoutId="hover-pill"
+                      className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/35 via-white/10 to-white/5 border border-white/25 backdrop-blur-md shadow-[0_14px_35px_rgba(0,0,0,0.55)]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ 
+                        layout: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
+                        opacity: { duration: 0.2 }
+                      }}
+                    />
+                  )}
+
+                  {/* Active white pill (no animation between tabs) */}
+                  {active && (
+                    <span className="pointer-events-none absolute inset-0 rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.65)]" />
+                  )}
+
+                  <span className="relative flex items-center gap-2">
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
         </div>
       </div>
 
@@ -170,62 +152,40 @@ export function Header() {
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <a
-                  href="#services"
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#services');
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  Services
-                </a>
-                <a
-                href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={(e) => {
-                  e.preventDefault();
-                  navigate('/projects');
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  Work
-                </a>
-                <a
-                  href="#about"
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#about');
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  About
-                </a>
-                <a
-                  href="#team"
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#team');
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  Team
-                </a>
-                <a
-                  href="#contact"
-                  className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-center hover:bg-primary/90 transition-all"
-                  onClick={(e) => {
-                    handleAnchorClick(e, '#contact');
+                {NAV_ITEMS.map((item) => {
+                  const active = isActivePath(item.path);
+                  return (
+                    <button
+                      key={item.path}
+                      type="button"
+                      className={cn(
+                        'text-left text-sm sm:text-base py-2',
+                        active ? 'text-foreground font-semibold' : 'text-muted-foreground hover:text-foreground'
+                      )}
+                      onClick={() => {
+                        navigate(item.path);
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
+                <button
+                  type="button"
+                  className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-center hover:bg-primary/90 transition-all text-sm sm:text-base"
+                  onClick={() => {
+                    navigate('/contact');
                     setIsMobileMenuOpen(false);
                   }}
                 >
                   Let's Talk
-                </a>
+                </button>
               </motion.nav>
             )}
           </AnimatePresence>
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }

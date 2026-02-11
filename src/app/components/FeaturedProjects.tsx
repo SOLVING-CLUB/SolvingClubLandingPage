@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { cn } from '@/app/components/ui/utils';
 import { projects, ProjectCategory } from '@/app/data/projects';
+import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 
 const filters: { label: string; value: ProjectCategory }[] = [
   { label: 'All Projects', value: 'All' },
   { label: 'Mobile App', value: 'Mobile App' },
   { label: 'Web App', value: 'Web App' },
   { label: 'Website', value: 'Website' },
-  { label: 'Multi Platform', value: 'Multi Platform' },
-  { label: 'Timeline', value: 'Timeline' },
 ];
 
 export function FeaturedProjects() {
@@ -78,8 +77,62 @@ export function FeaturedProjects() {
               >
                 <div className="grid gap-6 lg:grid-cols-[minmax(0,_1.1fr)_minmax(0,_1.9fr)] items-stretch">
                   {/* Left: visual preview */}
-                  <div className="relative flex items-center justify-center">
-                    {isWeb ? (
+                  <div className="relative flex items-center justify-center w-full">
+                    {project.imageUrl ? (
+                      // Use project image if available
+                      <div className="w-full max-w-md rounded-xl border border-border shadow-lg overflow-hidden bg-background">
+                        {isWeb ? (
+                          <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950">
+                            {/* Browser header */}
+                            <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-slate-900/80">
+                              <div className="flex gap-1.5">
+                                <span className="w-3 h-3 rounded-full bg-red-500/80" />
+                                <span className="w-3 h-3 rounded-full bg-amber-400/80" />
+                                <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                              </div>
+                              <div className="ml-3 h-6 flex-1 rounded-md bg-slate-800/80" />
+                            </div>
+                            {/* Browser body with image */}
+                            <div className="aspect-[16/10] relative overflow-hidden bg-white">
+                              <ImageWithFallback
+                                src={project.imageUrl}
+                                alt={`${project.title} preview`}
+                                className="w-full h-full object-contain"
+                                style={{ objectFit: 'contain' }}
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="w-full max-w-[180px] sm:max-w-[220px] mx-auto">
+                            {/* Mobile phone border frame */}
+                            <div className="relative bg-gradient-to-b from-slate-800 via-slate-900 to-black rounded-[2.5rem] p-2 shadow-2xl">
+                              {/* Outer phone casing */}
+                              <div className="bg-gradient-to-b from-slate-700 to-slate-900 rounded-[2rem] p-1">
+                                {/* Inner screen border */}
+                                <div className="bg-black rounded-[1.75rem] p-1">
+                                  {/* Screen area */}
+                                  <div className="bg-white rounded-[1.5rem] overflow-hidden aspect-[9/19] relative">
+                                    {/* Status bar notch (optional) */}
+                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-b-2xl z-10"></div>
+                                    
+                                    {/* App content */}
+                                    <div className="w-full h-full overflow-hidden">
+                                      <ImageWithFallback
+                                        src={project.imageUrl}
+                                        alt={`${project.title} preview`}
+                                        className="w-full h-full object-contain"
+                                        style={{ objectFit: 'contain' }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ) : isWeb ? (
+                      // Fallback placeholder for web projects without image
                       <div className="w-full max-w-md rounded-xl border border-border bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 shadow-lg overflow-hidden">
                         {/* Browser header */}
                         <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-slate-900/80">
@@ -98,9 +151,10 @@ export function FeaturedProjects() {
                         </div>
                       </div>
                     ) : (
-                      <div className="w-full max-w-xs mx-auto rounded-[2rem] border border-border bg-gradient-to-b from-slate-900 to-black shadow-xl flex items-center justify-center aspect-[9/19]">
-                        <div className="w-[88%] h-[88%] rounded-[1.6rem] bg-slate-950/90 border border-slate-700/60 flex items-center justify-center">
-                          <p className="text-xs sm:text-sm text-muted-foreground text-center px-4">
+                      // Fallback placeholder for mobile projects without image
+                      <div className="w-full max-w-[150px] sm:max-w-[180px] mx-auto rounded-[1.6rem] border border-border bg-gradient-to-b from-slate-900 to-black shadow-xl flex items-center justify-center aspect-[9/19]">
+                        <div className="w-[85%] h-[85%] rounded-[1.4rem] bg-slate-950/90 border border-slate-700/60 flex items-center justify-center">
+                          <p className="text-[10px] sm:text-xs text-muted-foreground text-center px-3">
                             {project.title}
                             <br />
                             <span className="text-[11px] text-muted-foreground/80">
