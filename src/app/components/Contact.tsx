@@ -134,7 +134,7 @@ export function Contact() {
 
               <motion.button
                 type="submit"
-                className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="w-full px-6 sm:px-8 py-3 sm:py-4 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all duration-300"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

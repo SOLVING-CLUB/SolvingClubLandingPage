@@ -13,7 +13,7 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
         <div className="max-w-5xl mx-auto text-center">
           <motion.div
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-muted/50 rounded-full mb-1 sm:mb-2 border border-border"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-1 sm:mb-2 border border-border/70 bg-gradient-to-b from-white/10 via-white/5 to-black/60 shadow-[inset_0_1px_rgba(255,255,255,0.55)]"
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6 }}
@@ -53,7 +53,7 @@ export function Hero() {
             <motion.a
               href="#contact"
               onClick={(e) => handleAnchorClick(e, '#contact')}
-              className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-full inline-flex items-center justify-center gap-2 hover:bg-primary/90 transition-all duration-300 text-sm sm:text-base"
+              className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full inline-flex items-center justify-center gap-2 text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-primary/95 via-primary/85 to-white/15 text-slate-50 shadow-[0_18px_45px_rgba(0,0,0,0.6)] hover:brightness-110 transition-all duration-300"
               whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
               whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
             >
@@ -63,7 +63,7 @@ export function Hero() {
             <motion.a
               href="#work"
               onClick={(e) => handleAnchorClick(e, '#work')}
-              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-border rounded-full hover:bg-muted/50 transition-all duration-300 text-center text-sm sm:text-base"
+              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full text-center text-sm sm:text-base border border-border/70 bg-gradient-to-b from-white/8 via-background/40 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.45)] hover:bg-muted/60 transition-all duration-300"
               whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
               whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
             >

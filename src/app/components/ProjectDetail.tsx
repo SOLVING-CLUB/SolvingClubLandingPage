@@ -102,11 +102,11 @@ export function ProjectDetail() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             {/* Title */}
-            <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
+            <div className="space-y-4">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
                 {project.title} – {project.subtitle}
               </h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 {project.description}
               </p>
             </div>

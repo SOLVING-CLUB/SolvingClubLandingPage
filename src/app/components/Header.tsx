@@ -56,7 +56,7 @@ export function Header() {
         {/* Let's Talk Button - Fixed Top Right */}
         <motion.button
           onClick={() => navigate('/contact')}
-          className="fixed top-4 right-8 z-50 px-4 lg:px-6 py-2 sm:py-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 text-sm lg:text-base"
+          className="fixed top-4 right-8 z-50 px-4 lg:px-6 py-2 sm:py-2.5 rounded-full text-sm lg:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all duration-300"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -173,7 +173,7 @@ export function Header() {
                 })}
                 <button
                   type="button"
-                  className="px-6 py-2.5 bg-primary text-primary-foreground rounded-full text-center hover:bg-primary/90 transition-all text-sm sm:text-base"
+                  className="px-6 py-2.5 rounded-full text-center text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all"
                   onClick={() => {
                     navigate('/contact');
                     setIsMobileMenuOpen(false);

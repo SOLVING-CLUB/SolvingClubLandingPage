@@ -36,12 +36,12 @@ export const MenuItem = ({
 }) => {
   return (
     <div onMouseEnter={() => setActive(item)} className="relative">
-      <motion.p
+      <motion.div
         transition={{ duration: 0.3 }}
-        className="cursor-pointer text-foreground hover:opacity-[0.9] text-sm lg:text-base font-medium"
+        className="cursor-pointer text-sm lg:text-base font-medium px-4 py-2 rounded-full border border-border/60 bg-gradient-to-b from-white/8 via-background/40 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.45)] hover:bg-muted/70"
       >
-        {item}
-      </motion.p>
+        <span className="text-foreground">{item}</span>
+      </motion.div>
       {active !== null && (
         <motion.div
           initial={{ opacity: 0, scale: 0.85, y: 10 }}

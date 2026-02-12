@@ -1,4 +1,5 @@
 export type ProjectCategory = 'All' | 'Mobile App' | 'Web App' | 'Website';
+export type ProjectStatus = 'ongoing' | 'completed';
 
 export type Project = {
   id: number;
@@ -14,6 +15,9 @@ export type Project = {
   liveSiteUrl?: string;
   projectType?: 'Client Project' | 'Freelance Project' | 'Multi Platform';
   imageUrl?: string;
+  status?: ProjectStatus;
+  dateStart?: string;
+  dateEnd?: string;
 };
 
 export const projects: Project[] = [
@@ -32,74 +36,84 @@ export const projects: Project[] = [
       'Travel Together is an AI‑driven travel application that creates personalised trip itineraries and helps groups stay coordinated before and during travel. The app combines real‑time geolocation navigation, smart suggestions for places to visit, and shared schedules so every traveller knows where to be and when. A dedicated admin dashboard allows trip organisers to review routes, manage travellers, and adjust plans instantly. The backend is powered by Firebase and Firestore for secure authentication, reliable data storage, and real‑time updates, while AI integration personalises recommendations based on user preferences and travel history.',
     technologies: ['Flutter', 'Dart', 'Firebase', 'Firestore', 'AI Integration'],
     liveSiteUrl: '#',
+    status: 'ongoing',
+    dateStart: 'Sep 2024',
   },
   {
     id: 2,
     title: 'SARAL EVENTS - WEBSITE',
-    subtitle: 'Marketing Website',
+    subtitle: 'Marketing Website & Deep-Link Host',
     category: 'Website',
     team: 'Team: 1',
     date: 'Started at 23-Apr-2025 – about to close',
     badge: 'Client Project',
     projectType: 'Client Project',
     description:
-      'Public marketing website for Saral Events that showcases services, featured events, and makes it easy for users to discover and enquire.',
+      'Public marketing site that introduces Saral Events, showcases categories, and routes users into the correct app screens via universal links.',
     overview:
-      'Designed and developed the primary marketing website for Saral Events, focused on lead generation and event discovery with SEO-friendly pages and responsive layouts.',
-    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Vercel'],
+      'Landing website for Saral Events built with Next.js 14 and Tailwind CSS. It acts as the public face of the platform, explaining how Saral simplifies event planning while hosting universal-link routes like /service/[id] and /invite/[slug] that deep‑link into the mobile apps. The site is optimised for SEO, performance, and clear CTAs to download the apps or start planning an event.',
+    technologies: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Vercel'],
     liveSiteUrl: '#',
     imageUrl: '/saral-events-landing.png',
+    status: 'ongoing',
+    dateStart: '23 Apr 2025',
   },
   {
     id: 3,
     title: 'SARAL EVENTS ADMIN PORTAL',
-    subtitle: 'Web App for Organisers',
+    subtitle: 'Company Dashboard Web App',
     category: 'Web App',
     team: 'Team: 1',
     date: 'Started at 23-Apr-2025 – about to close',
     badge: 'Client Project',
     projectType: 'Client Project',
     description:
-      'Web admin portal for organisers to configure events, manage vendors and tickets, and monitor real‑time bookings.',
+      'Admin-only dashboard where the Saral Events team manages users, vendors, bookings, payments, invitations, and platform analytics.',
     overview:
-      'SaralEvents is a full‑stack event management platform covering website, web admin, and mobile apps for attendees and vendors. The admin portal is built with TypeScript for web components and backed by Supabase services. It provides organiser tools for configuring events, managing vendors and inventory, tracking real‑time availability, and promoting featured events with a banner system. Role‑based access and clear dashboards help teams operate complex events smoothly while keeping data consistent across all channels.',
-    technologies: ['Flutter', 'Dart', 'TypeScript', 'Supabase', 'PLpgSQL', 'Vercel'],
+      'Next.js 14 admin portal that gives the Saral Events operations team full control over the platform. It exposes dashboards for orders, vendors, users, services, reviews, marketing banners, and support tickets, backed by Supabase SQL views and role‑based access control. From here the team can approve vendors, resolve support issues, trigger payouts, and monitor real‑time business metrics, making the multi‑app ecosystem manageable from a single place.',
+    technologies: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Postgres', 'RBAC'],
     liveSiteUrl: '#',
     imageUrl: '/saral-events-admin.png',
+    status: 'ongoing',
+    dateStart: '23 Apr 2025',
   },
   {
     id: 4,
     title: 'SARAL EVENTS USER APP',
-    subtitle: 'Mobile App for Attendees',
+    subtitle: 'Customer Event Planning App',
     category: 'Mobile App',
     team: 'Team: 1',
     date: 'Started at 23-Apr-2025 – about to close',
     badge: 'Client Project',
     projectType: 'Client Project',
     description:
-      'Mobile app for attendees to browse events, book tickets, and manage their passes from a single place.',
+      'Flutter mobile app where customers discover verified vendors, plan events, create e‑invites, and book services with online payments.',
     overview:
-      'Developed a user-facing mobile experience for Saral Events attendees with event discovery, ticket booking, QR-based tickets, and real-time notifications.',
-    technologies: ['React Native', 'TypeScript', 'Firebase', 'Stripe'],
+      'Saral Events User App is the customer-facing Flutter application in the Saral ecosystem. Users authenticate with email/Google, manage their profile and addresses, browse services across categories (catering, decor, venues, photography, etc.), build event plans with budgets and checklists, create shareable e‑invites, and complete bookings using Razorpay. The app talks directly to a shared Supabase backend (Postgres + Auth + Functions) and consumes deep/universal links from the landing site for invite previews and referrals.',
+    technologies: ['Flutter', 'Dart', 'Supabase', 'Razorpay', 'Deep Links', 'Android', 'iOS'],
     liveSiteUrl: '#',
     imageUrl: '/saral-events-user-app.jpeg',
+    status: 'ongoing',
+    dateStart: '23 Apr 2025',
   },
   {
     id: 5,
     title: 'SARAL EVENTS VENDOR APP',
-    subtitle: 'Mobile App for Vendors',
+    subtitle: 'Vendor Management App',
     category: 'Mobile App',
     team: 'Team: 1',
     date: 'Started at 23-Apr-2025 – about to close',
     badge: 'Client Project',
     projectType: 'Client Project',
     description:
-      'Vendor‑facing mobile app to manage stalls, inventory, and orders during Saral Events functions.',
+      'Flutter app for vendors to manage profiles, services, bookings, payments, and on‑ground event operations.',
     overview:
-      'Created a vendor-focused mobile application with stall assignment, order tracking, payment summaries, and on-site tools to streamline vendor operations.',
-    technologies: ['React Native', 'TypeScript', 'Redux', 'Firebase'],
+      'Saral Events Vendor App is a dedicated Flutter application for service providers on the platform. Vendors onboard with KYC, configure the services they offer, manage availability and pricing, and respond to incoming bookings. The app provides a lightweight dashboard for orders, payouts, chat/support, and notifications so vendors can run their business from mobile while staying in sync with the shared Supabase backend and the admin portal.',
+    technologies: ['Flutter', 'Dart', 'Supabase', 'Push Notifications'],
     liveSiteUrl: '#',
     imageUrl: '/saral-events-vendor-app.jpeg',
+    status: 'ongoing',
+    dateStart: '23 Apr 2025',
   },
   {
     id: 6,
@@ -111,12 +125,15 @@ export const projects: Project[] = [
     badge: 'Freelance Project',
     projectType: 'Freelance Project',
     description:
-      'Full‑stack ticket booking web platform with secure PayU payments, QR‑code tickets, and a role‑based admin dashboard.',
+      'BookMyShow‑style ticket booking platform (tuvo.in) with PayU payments, email tickets, and a simple admin experience.',
     overview:
-      'TUVO is a full‑stack ticket booking platform built with Next.js 15 and TypeScript. It integrates secure PayU payments with server‑side verification to ensure safe transactions for users. Tickets are generated as PDFs with embedded QR codes, and automated email receipts keep customers informed after each purchase. On the operations side, a powerful role‑based admin dashboard allows organisers to create events, manage pricing and capacity, view reports, and monitor bookings in real time. The system is deployed with Supabase as the backend and Vercel for fast, reliable hosting.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind', 'Radix UI', 'Supabase', 'Vercel'],
+      'TUVO is a production ticket booking platform similar to BookMyShow, built on Next.js and Supabase. Users register, browse events, and purchase tickets through a PayU payment flow; on success, they receive a confirmation email with their ticket attached. The system stores booking history so users can view and download previous tickets. On the admin side, protected routes allow event owners to configure events and manage bookings. The stack combines Next.js for the web app, Supabase for auth/database/storage, Resend for transactional mail, and Vercel + a custom domain (tuvo.in) for deployment.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind', 'Supabase', 'PayU', 'Resend', 'Vercel'],
     liveSiteUrl: '#',
     imageUrl: '/tuvo-landing.png',
+    status: 'completed',
+    dateStart: 'Jan 2025',
+    dateEnd: 'Aug 2025',
   },
   {
     id: 7,
@@ -134,6 +151,9 @@ export const projects: Project[] = [
     technologies: ['TypeScript', 'React', 'Supabase', 'Firebase', 'Capacitor', 'Vercel', 'iOS', 'Android'],
     liveSiteUrl: '#',
     imageUrl: '/plattr.jpeg',
+    status: 'completed',
+    dateStart: 'Nov 4 2025',
+    dateEnd: 'Jan 15 2026',
   },
   {
     id: 8,
@@ -145,18 +165,20 @@ export const projects: Project[] = [
     badge: 'Client Project',
     projectType: 'Client Project',
     description:
-      'Modern responsive website that presents Pranaras Academy’s courses, programs, and key information for prospective students.',
+      'Modern, responsive marketing website for Pranaras Academy, built as a scalable foundation for a full educational platform.',
     overview:
-      'Pranaras Academy Website is a front‑end project focused on clearly presenting the academy’s offerings in a clean, professional, and mobile‑friendly layout. The site highlights the academy’s mission, featured courses, enrollment details, and contact information so visitors can quickly understand what is offered and how to get started. The page structure uses well‑defined sections such as hero, about, courses, testimonials, and contact to guide users through the content. Particular attention is given to typography, branding, and responsive behaviour so that the experience feels polished on desktops, tablets, and smartphones. Modern best practices around semantic HTML, accessibility, and performance are applied throughout.',
+      'The Pranaras Academy website is a Next.js App Router project that gives the academy a clean, professional online presence. It uses a component‑based architecture with reusable layout pieces (header, footer, sections) and Tailwind CSS for fast, responsive UI. The implementation focuses on performance, accessibility, and a structure that can grow into course listings, student dashboards, authentication, and admin tooling. Documentation and configuration (Next, TypeScript, PostCSS) are set up so the codebase is easy to extend and maintain over time.',
     technologies: [
-      'HTML5',
-      'CSS3 (Flexbox, Grid, responsive design)',
-      'JavaScript (ES6+)',
-      'Git & GitHub',
-      'Modern browser DevTools',
+      'Next.js (App Router)',
+      'TypeScript',
+      'Tailwind CSS',
+      'Component-based UI',
+      'Dark/Light Theme System',
     ],
     liveSiteUrl: '#',
     imageUrl: '/pranaras-academy.png',
+    status: 'ongoing',
+    dateStart: '20 Dec 2025',
   },
   {
     id: 9,
@@ -174,22 +196,35 @@ export const projects: Project[] = [
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Contentful', 'Vercel'],
     liveSiteUrl: '#',
     imageUrl: '/relai-world.png',
+    status: 'ongoing',
+    dateStart: '3 Feb',
   },
   {
     id: 10,
     title: 'JOBSNEXT',
-    subtitle: 'Job Search Mobile App - Android, iOS',
+    subtitle: 'Job Portal Mobile App - Android, iOS',
     category: 'Mobile App',
     team: 'Team: 2',
     date: 'Client: ABSOLVE IT&HR PVT.LTD',
     badge: 'Client Project',
     projectType: 'Client Project',
     description:
-      'Mobile app for job seekers with job listings, search, and notifications, built for Android and iOS.',
+      'End‑to‑end Flutter job portal app bringing the existing web recruitment platform to Android and iOS with employer, job seeker, admin, and director modules.',
     overview:
-      'Built a comprehensive job search mobile application for both Android and iOS platforms. Features include advanced job search filters, saved jobs, application tracking, push notifications, and user profiles. Integrated with backend API for real-time job listings.',
-    technologies: ['React Native', 'TypeScript', 'Redux', 'Firebase', 'Node.js', 'MongoDB'],
+      'JOBSNEXT Mobile is a Flutter application designed as a full companion to the existing web job portal. It uses a clean architecture with Provider state management, GoRouter navigation, Dio/Retrofit API integration, and local storage via Hive/Shared Preferences. The app includes rich flows for employers (posting jobs, viewing applicants, managing pipelines) and job seekers (profiles, multi‑resume management, video resumes, advanced job search, recommendations, and application tracking). Separate admin and director views expose analytics, revenue, growth metrics, and support tooling. The project is planned and delivered in structured phases covering foundation, auth, dashboards, notifications, testing, and release to the App Store and Play Store.',
+    technologies: [
+      'Flutter',
+      'Dart',
+      'Clean Architecture',
+      'Provider',
+      'GoRouter',
+      'Dio & Retrofit',
+      'Hive',
+      'Firebase Cloud Messaging',
+    ],
     liveSiteUrl: '#',
     imageUrl: '/jobsnext.jpeg',
+    status: 'ongoing',
+    dateStart: '20 Jan 2026',
   },
 ];

@@ -12,6 +12,7 @@ import {
   Check
 } from 'lucide-react';
 import { handleAnchorClick } from '@/app/components/ui/utils';
+import { cn } from '@/app/components/ui/utils';
 
 const serviceCategories = [
   {
@@ -138,13 +139,13 @@ export function Services() {
       <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <motion.div
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full mb-4 sm:mb-6"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/50 bg-gradient-to-b from-white/15 via-primary/20 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.6)] backdrop-blur-sm"
             initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0 }}
           >
             <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-            <span className="text-xs sm:text-sm font-medium text-primary">Our Services</span>
+            <span className="text-xs sm:text-sm font-medium text-slate-50">Our Services</span>
           </motion.div>
 
           <motion.h2
@@ -187,11 +188,13 @@ export function Services() {
                 <motion.button
                   key={category.id}
                   onClick={() => setActiveTab(category.id)}
-                  className={`group relative px-3 sm:px-4 lg:px-6 py-2 sm:py-3 rounded-full border transition-all duration-300 ${
-                    isActive 
-                      ? 'border-primary bg-primary text-primary-foreground' 
-                      : 'border-border bg-card hover:border-primary/50'
-                  }`}
+                  className={cn(
+                    'group relative px-4 sm:px-5 lg:px-7 py-2 sm:py-3 rounded-full border transition-all duration-300',
+                    'bg-gradient-to-b from-white/18 via-white/8 to-black/80 shadow-[inset_0_1px_rgba(255,255,255,0.65)] backdrop-blur-sm',
+                    isActive
+                      ? 'border-white/80 text-slate-50'
+                      : 'border-white/20 text-slate-300 hover:border-white/60 hover:text-slate-50'
+                  )}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: 0.6 + index * 0.05 }}
@@ -282,7 +285,7 @@ export function Services() {
                 <motion.a
                   href="#contact"
                   onClick={(e) => handleAnchorClick(e, '#contact')}
-                  className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 text-sm sm:text-base"
+                  className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.5 }}

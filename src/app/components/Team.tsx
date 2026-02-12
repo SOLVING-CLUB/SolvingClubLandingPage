@@ -232,7 +232,7 @@ export function Team() {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-8 h-8 sm:w-9 sm:h-9 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                          className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center border border-border/70 bg-gradient-to-b from-white/10 via-background/40 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.45)] hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                           whileHover={{ y: -4, scale: 1.1 }}
                           whileTap={{ scale: 0.95 }}
                         >

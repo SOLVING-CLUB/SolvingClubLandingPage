@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { cn } from '@/app/components/ui/utils';
 import { projects, ProjectCategory } from '@/app/data/projects';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/app/components/ui/tooltip';
 
 const filters: { label: string; value: ProjectCategory }[] = [
   { label: 'All Projects', value: 'All' },
@@ -45,9 +46,11 @@ export function FeaturedProjects() {
               onClick={() => setActiveFilter(filter.value)}
               className={cn(
                 'px-4 py-2 rounded-full text-sm border transition-all',
+                'bg-gradient-to-b from-white/15 via-white/5 to-black/60',
+                'shadow-[inset_0_1px_rgba(255,255,255,0.6)] backdrop-blur-sm',
                 activeFilter === filter.value
-                  ? 'bg-primary text-primary-foreground border-primary shadow'
-                  : 'bg-muted/40 text-muted-foreground border-border hover:bg-muted'
+                  ? 'text-slate-50 border-primary/80'
+                  : 'text-slate-300 border-border/70 hover:border-primary/60'
               )}
             >
               {filter.label}
@@ -167,24 +170,42 @@ export function FeaturedProjects() {
                   </div>
 
                   {/* Right: content */}
-                  <div className="flex flex-col justify-between gap-4">
+                  <div className="flex flex-col gap-5">
                     <div className="space-y-3">
                       {/* Meta row */}
                       <div className="flex flex-wrap items-center gap-3 text-[11px] sm:text-xs text-muted-foreground">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1">
+                        <span className="inline-flex items-center gap-1 rounded-full px-3 py-1 border border-border/60 bg-gradient-to-b from-white/10 via-white/5 to-black/50 shadow-[inset_0_1px_rgba(255,255,255,0.5)]">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                           Team {project.team.replace('Team: ', '')}
                         </span>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1">
-                          {project.date}
-                        </span>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/90 px-3 py-1 text-[11px] font-medium text-black">
+                        <span className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-medium text-black border border-amber-400/70 bg-gradient-to-b from-amber-300/95 via-amber-400/95 to-amber-500">
                           {project.projectType || project.badge}
                         </span>
+                        {project.status && project.dateStart && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span
+                                className={cn(
+                                  'inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-medium cursor-default border',
+                                  project.status === 'completed'
+                                    ? 'border-emerald-300/80 bg-gradient-to-b from-emerald-200/95 via-emerald-300/95 to-emerald-500 text-black'
+                                    : 'border-sky-300/80 bg-gradient-to-b from-sky-200/95 via-sky-300/95 to-sky-500 text-black'
+                                )}
+                              >
+                                {project.status === 'completed' ? 'Completed' : 'Ongoing'}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent side="top">
+                              {project.status === 'completed' && project.dateEnd
+                                ? `${project.dateStart} – ${project.dateEnd}`
+                                : project.dateStart}
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
                       </div>
 
                       {/* Title & description */}
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <h3 className="text-xl sm:text-2xl font-semibold">
                           {project.title}{' '}
                           <span className="font-normal text-muted-foreground">
@@ -194,6 +215,13 @@ export function FeaturedProjects() {
                         <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                           {project.description}
                         </p>
+                        {project.overview && (
+                          <p className="text-xs sm:text-sm text-muted-foreground/80 leading-relaxed">
+                            {project.overview.length > 420
+                              ? `${project.overview.slice(0, 420)}…`
+                              : project.overview}
+                          </p>
+                        )}
                       </div>
 
                       {/* Technologies */}
@@ -202,7 +230,7 @@ export function FeaturedProjects() {
                           {project.technologies.map((tech) => (
                             <span
                               key={tech}
-                              className="inline-flex items-center rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-medium border border-primary/20"
+                              className="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium border border-primary/40 bg-gradient-to-b from-primary/15 via-primary/10 to-black/60 text-primary shadow-[inset_0_1px_rgba(255,255,255,0.4)]"
                             >
                               {tech}
                             </span>

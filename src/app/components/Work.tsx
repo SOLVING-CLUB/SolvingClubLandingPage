@@ -110,7 +110,7 @@ export function Work() {
       <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16 lg:mb-20">
           <motion.div
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full mb-4 sm:mb-6"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-primary/40 bg-gradient-to-b from-primary/15 via-primary/10 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.55)]"
             initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -156,7 +156,7 @@ export function Work() {
           <motion.button
             type="button"
             onClick={() => navigate('/projects')}
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 text-sm sm:text-base"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

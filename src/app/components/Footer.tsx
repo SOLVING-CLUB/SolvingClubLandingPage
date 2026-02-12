@@ -31,7 +31,7 @@ export function Footer() {
                 <motion.a
                   key={letter}
                   href="#"
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-muted rounded-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center border border-border/70 bg-gradient-to-b from-white/10 via-background/40 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.45)] hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                   whileHover={{ y: -4, scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: 20 }}

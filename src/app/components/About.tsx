@@ -86,7 +86,7 @@ export function About() {
               <motion.a
                 href="#contact"
                 onClick={(e) => handleAnchorClick(e, '#contact')}
-                className="px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all duration-300 text-center text-sm sm:text-base"
+                className="px-6 sm:px-8 py-3 sm:py-4 rounded-full text-center text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -95,7 +95,7 @@ export function About() {
               <motion.a
                 href="#work"
                 onClick={(e) => handleAnchorClick(e, '#work')}
-                className="px-6 sm:px-8 py-3 sm:py-4 border border-border rounded-full hover:bg-muted/50 transition-all duration-300 text-center text-sm sm:text-base"
+                className="px-6 sm:px-8 py-3 sm:py-4 border border-border/70 rounded-full bg-gradient-to-b from-white/8 via-background/40 to-black/70 shadow-[inset_0_1px_rgba(255,255,255,0.45)] hover:bg-muted/60 transition-all duration-300 text-center text-sm sm:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
