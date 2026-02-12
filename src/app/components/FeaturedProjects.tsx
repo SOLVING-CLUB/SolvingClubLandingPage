@@ -3,8 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { cn } from '@/app/components/ui/utils';
 import { projects, ProjectCategory } from '@/app/data/projects';
-import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { ProjectAsset } from '@/app/components/ProjectAsset';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/app/components/ui/tooltip';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/app/components/ui/dialog';
+import { Smartphone, ExternalLink } from 'lucide-react';
 
 const filters: { label: string; value: ProjectCategory }[] = [
   { label: 'All Projects', value: 'All' },
@@ -61,11 +70,6 @@ export function FeaturedProjects() {
         {/* Project cards */}
         <div className="space-y-8">
           {filteredProjects.map((project) => {
-            const isWeb =
-              project.category === 'Web App' ||
-              project.category === 'Website' ||
-              project.category === 'Multi Platform';
-
             return (
               <motion.article
                 key={project.id}
@@ -79,94 +83,13 @@ export function FeaturedProjects() {
                 transition={{ duration: 0.4 }}
               >
                 <div className="grid gap-6 lg:grid-cols-[minmax(0,_1.1fr)_minmax(0,_1.9fr)] items-stretch">
-                  {/* Left: visual preview */}
+                  {/* Left: Project Showcase Image */}
                   <div className="relative flex items-center justify-center w-full">
-                    {project.imageUrl ? (
-                      // Use project image if available
-                      <div className="w-full max-w-md rounded-xl border border-border shadow-lg overflow-hidden bg-background">
-                        {isWeb ? (
-                          <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950">
-                            {/* Browser header */}
-                            <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-slate-900/80">
-                              <div className="flex gap-1.5">
-                                <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                                <span className="w-3 h-3 rounded-full bg-amber-400/80" />
-                                <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                              </div>
-                              <div className="ml-3 h-6 flex-1 rounded-md bg-slate-800/80" />
-                            </div>
-                            {/* Browser body with image */}
-                            <div className="aspect-[16/10] relative overflow-hidden bg-white">
-                              <ImageWithFallback
-                                src={project.imageUrl}
-                                alt={`${project.title} preview`}
-                                className="w-full h-full object-contain"
-                                style={{ objectFit: 'contain' }}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="w-full max-w-[180px] sm:max-w-[220px] mx-auto">
-                            {/* Mobile phone border frame */}
-                            <div className="relative bg-gradient-to-b from-slate-800 via-slate-900 to-black rounded-[2.5rem] p-2 shadow-2xl">
-                              {/* Outer phone casing */}
-                              <div className="bg-gradient-to-b from-slate-700 to-slate-900 rounded-[2rem] p-1">
-                                {/* Inner screen border */}
-                                <div className="bg-black rounded-[1.75rem] p-1">
-                                  {/* Screen area */}
-                                  <div className="bg-white rounded-[1.5rem] overflow-hidden aspect-[9/19] relative">
-                                    {/* Status bar notch (optional) */}
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-b-2xl z-10"></div>
-                                    
-                                    {/* App content */}
-                                    <div className="w-full h-full overflow-hidden">
-                                      <ImageWithFallback
-                                        src={project.imageUrl}
-                                        alt={`${project.title} preview`}
-                                        className="w-full h-full object-contain"
-                                        style={{ objectFit: 'contain' }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ) : isWeb ? (
-                      // Fallback placeholder for web projects without image
-                      <div className="w-full max-w-md rounded-xl border border-border bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 shadow-lg overflow-hidden">
-                        {/* Browser header */}
-                        <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-slate-900/80">
-                          <div className="flex gap-1.5">
-                            <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                            <span className="w-3 h-3 rounded-full bg-amber-400/80" />
-                            <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                          </div>
-                          <div className="ml-3 h-6 flex-1 rounded-md bg-slate-800/80" />
-                        </div>
-                        {/* Browser body */}
-                        <div className="aspect-[16/10] bg-slate-950/80 flex items-center justify-center">
-                          <p className="text-xs sm:text-sm text-muted-foreground">
-                            Project Preview
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      // Fallback placeholder for mobile projects without image
-                      <div className="w-full max-w-[150px] sm:max-w-[180px] mx-auto rounded-[1.6rem] border border-border bg-gradient-to-b from-slate-900 to-black shadow-xl flex items-center justify-center aspect-[9/19]">
-                        <div className="w-[85%] h-[85%] rounded-[1.4rem] bg-slate-950/90 border border-slate-700/60 flex items-center justify-center">
-                          <p className="text-[10px] sm:text-xs text-muted-foreground text-center px-3">
-                            {project.title}
-                            <br />
-                            <span className="text-[11px] text-muted-foreground/80">
-                              Project Preview
-                            </span>
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                    <ProjectAsset
+                      imageUrl={project.imageUrl}
+                      title={project.title}
+                      category={project.category}
+                    />
                   </div>
 
                   {/* Right: content */}
@@ -257,7 +180,66 @@ export function FeaturedProjects() {
                         GitHub
                       </button>
 
-                      {project.liveSiteUrl && project.liveSiteUrl !== '#' && (
+                      {/* Download App button for Mobile Apps */}
+                      {project.category === 'Mobile App' && (project.appStore || project.playStore) ? (
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-500/80 bg-emerald-500/10 px-4 py-2 text-xs sm:text-sm font-medium text-emerald-300 hover:bg-emerald-500/20 transition-colors"
+                            >
+                              <Smartphone className="h-4 w-4" />
+                              Download App
+                            </button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                              <DialogTitle className="text-xl sm:text-2xl">{project.title}</DialogTitle>
+                              <DialogDescription>Download the app from your preferred app store</DialogDescription>
+                            </DialogHeader>
+                            <div className="flex flex-col gap-4 py-4">
+                              {project.appStore && (
+                                <a
+                                  href={project.appStore.trim()}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-4 p-4 rounded-lg border border-border bg-card hover:bg-accent transition-colors group"
+                                >
+                                  <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-black flex items-center justify-center">
+                                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                      <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+                                    </svg>
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="text-xs text-muted-foreground mb-1">Download on the</div>
+                                    <div className="text-lg sm:text-xl font-semibold group-hover:text-primary transition-colors">App Store</div>
+                                  </div>
+                                  <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                                </a>
+                              )}
+                              {project.playStore && (
+                                <a
+                                  href={project.playStore.trim()}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-4 p-4 rounded-lg border border-border bg-card hover:bg-accent transition-colors group"
+                                >
+                                  <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-black flex items-center justify-center">
+                                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                      <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.05L14.18,12L3.84,21.95C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+                                    </svg>
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="text-xs text-muted-foreground mb-1">Get it on</div>
+                                    <div className="text-lg sm:text-xl font-semibold group-hover:text-primary transition-colors">Google Play</div>
+                                  </div>
+                                  <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                                </a>
+                              )}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      ) : project.liveSiteUrl && project.liveSiteUrl !== '#' ? (
                         <a
                           href={project.liveSiteUrl}
                           target="_blank"
@@ -266,7 +248,7 @@ export function FeaturedProjects() {
                         >
                           View Live Project
                         </a>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </div>

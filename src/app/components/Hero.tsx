@@ -53,7 +53,7 @@ export function Hero() {
             <motion.a
               href="#contact"
               onClick={(e) => handleAnchorClick(e, '#contact')}
-              className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full inline-flex items-center justify-center gap-2 text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-primary/95 via-primary/85 to-white/15 text-slate-50 shadow-[0_18px_45px_rgba(0,0,0,0.6)] hover:brightness-110 transition-all duration-300"
+              className="group w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-full inline-flex items-center justify-center gap-2 text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-primary/95 via-primary/85 to-white/15 text-black shadow-[0_18px_45px_rgba(0,0,0,0.6)] hover:brightness-110 transition-all duration-300"
               whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
               whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
             >

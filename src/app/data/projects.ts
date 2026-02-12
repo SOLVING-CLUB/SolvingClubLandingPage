@@ -18,6 +18,8 @@ export type Project = {
   status?: ProjectStatus;
   dateStart?: string;
   dateEnd?: string;
+  appStore?: string;
+  playStore?: string;
 };
 
 export const projects: Project[] = [
@@ -38,6 +40,8 @@ export const projects: Project[] = [
     liveSiteUrl: '#',
     status: 'ongoing',
     dateStart: 'Sep 2024',
+    appStore: 'https://apps.apple.com/app/travel-together',
+    playStore: 'https://play.google.com/store/apps/details?id=com.traveltogether.app',
   },
   {
     id: 2,
@@ -95,6 +99,8 @@ export const projects: Project[] = [
     imageUrl: '/saral-events-user-app.jpeg',
     status: 'ongoing',
     dateStart: '23 Apr 2025',
+    appStore: 'https://apps.apple.com/app/saral-events-user',
+    playStore: 'https://play.google.com/store/apps/details?id=com.saralevents.user',
   },
   {
     id: 5,
@@ -114,6 +120,8 @@ export const projects: Project[] = [
     imageUrl: '/saral-events-vendor-app.jpeg',
     status: 'ongoing',
     dateStart: '23 Apr 2025',
+    appStore: 'https://apps.apple.com/app/saral-events-vendor',
+    playStore: 'https://play.google.com/store/apps/details?id=com.saralevents.vendor',
   },
   {
     id: 6,
@@ -154,6 +162,8 @@ export const projects: Project[] = [
     status: 'completed',
     dateStart: 'Nov 4 2025',
     dateEnd: 'Jan 15 2026',
+    appStore: 'https://apps.apple.com/in/app/plattr/id6754812718',
+    playStore: 'https://play.google.com/store/apps/details?id=com.caterplanner.app',
   },
   {
     id: 8,
@@ -226,5 +236,7 @@ export const projects: Project[] = [
     imageUrl: '/jobsnext.jpeg',
     status: 'ongoing',
     dateStart: '20 Jan 2026',
+    appStore: 'https://apps.apple.com/app/jobsnext',
+    playStore: 'https://play.google.com/store/apps/details?id=com.jobsnext.app',
   },
 ];

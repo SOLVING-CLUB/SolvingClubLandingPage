@@ -1,9 +1,18 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft, ExternalLink, Users, Calendar } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Users, Calendar, Smartphone } from 'lucide-react';
 import { projects, Project } from '@/app/data/projects';
 import { cn } from '@/app/components/ui/utils';
 import { Header } from '@/app/components/Header';
+import { ProjectAsset } from '@/app/components/ProjectAsset';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/app/components/ui/dialog';
 
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -50,48 +59,18 @@ export function ProjectDetail() {
 
         {/* Main Content Grid */}
         <div className="grid gap-8 lg:grid-cols-[minmax(0,_1.2fr)_minmax(0,_1.8fr)] items-start">
-          {/* Left: Browser Window Preview */}
+          {/* Left: Project Showcase */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <div className="rounded-lg border border-border bg-card overflow-hidden shadow-xl">
-              {/* Browser Window Header */}
-              <div className="bg-muted/50 border-b border-border px-4 py-2 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                </div>
-                <div className="flex-1 bg-background/50 rounded px-3 py-1 text-xs text-muted-foreground text-center">
-                  {project.liveSiteUrl || 'project-preview.com'}
-                </div>
-              </div>
-              
-              {/* Browser Content Area */}
-              <div className="bg-muted/30 aspect-[4/3] flex items-center justify-center p-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 opacity-50">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      className="text-muted-foreground"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Project Preview</p>
-                </div>
-              </div>
-            </div>
+            <ProjectAsset
+              imageUrl={project.imageUrl}
+              title={project.title}
+              category={project.category}
+            />
           </motion.div>
 
           {/* Right: Project Details */}
@@ -133,20 +112,82 @@ export function ProjectDetail() {
               </div>
             </div>
 
-            {/* Visit Live Site Button */}
-            {project.liveSiteUrl && (
-              <motion.a
-                href={project.liveSiteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-background border-2 border-primary text-foreground rounded-lg hover:bg-primary hover:text-primary-foreground transition-all"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span>Visit Live Site</span>
-                <ExternalLink size={18} />
-              </motion.a>
-            )}
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              {/* Download App Button for Mobile Apps */}
+              {project.category === 'Mobile App' && (project.appStore || project.playStore) ? (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <motion.button
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Smartphone size={18} />
+                      <span>Download App</span>
+                    </motion.button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="text-xl sm:text-2xl">{project.title}</DialogTitle>
+                      <DialogDescription>Download the app from your preferred app store</DialogDescription>
+                    </DialogHeader>
+                    <div className="flex flex-col gap-4 py-4">
+                      {project.appStore && (
+                        <a
+                          href={project.appStore.trim()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-4 p-4 rounded-lg border border-border bg-card hover:bg-accent transition-colors group"
+                        >
+                          <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black flex items-center justify-center">
+                            <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-xs text-muted-foreground mb-1">Download on the</div>
+                            <div className="text-xl sm:text-2xl font-semibold group-hover:text-primary transition-colors">App Store</div>
+                          </div>
+                          <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </a>
+                      )}
+                      {project.playStore && (
+                        <a
+                          href={project.playStore.trim()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-4 p-4 rounded-lg border border-border bg-card hover:bg-accent transition-colors group"
+                        >
+                          <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-black flex items-center justify-center">
+                            <svg className="w-10 h-10 sm:w-12 sm:h-12 text-white" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.05L14.18,12L3.84,21.95C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-xs text-muted-foreground mb-1">Get it on</div>
+                            <div className="text-xl sm:text-2xl font-semibold group-hover:text-primary transition-colors">Google Play</div>
+                          </div>
+                          <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </a>
+                      )}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              ) : project.liveSiteUrl && project.liveSiteUrl !== '#' ? (
+                <motion.a
+                  href={project.liveSiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-background border-2 border-primary text-foreground rounded-lg hover:bg-primary hover:text-primary-foreground transition-all"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span>Visit Live Site</span>
+                  <ExternalLink size={18} />
+                </motion.a>
+              ) : null}
+            </div>
           </motion.div>
         </div>
 

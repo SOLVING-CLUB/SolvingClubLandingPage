@@ -25,8 +25,10 @@ export default function App() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
-    // Add dark class to html element for dark theme
+    // Force dark theme only - website is locked to dark mode
     document.documentElement.classList.add('dark');
+    // Remove any accidental light mode classes
+    document.documentElement.classList.remove('light');
     
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
