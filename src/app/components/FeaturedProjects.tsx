@@ -172,21 +172,13 @@ export function FeaturedProjects() {
                         View Details
                       </button>
 
-                      {/* Placeholder GitHub button (no URL yet) */}
-                      <button
-                        type="button"
-                        className="inline-flex items-center justify-center rounded-full border border-border px-4 py-2 text-xs sm:text-sm font-medium text-muted-foreground hover:bg-muted/60 transition-colors"
-                      >
-                        GitHub
-                      </button>
-
                       {/* Download App button for Mobile Apps */}
                       {project.category === 'Mobile App' && (project.appStore || project.playStore) ? (
                         <Dialog>
                           <DialogTrigger asChild>
                             <button
                               type="button"
-                              className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-500/80 bg-emerald-500/10 px-4 py-2 text-xs sm:text-sm font-medium text-emerald-300 hover:bg-emerald-500/20 transition-colors"
+                              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white px-4 py-2 text-xs sm:text-sm font-medium text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-shadow duration-300"
                             >
                               <Smartphone className="h-4 w-4" />
                               Download App

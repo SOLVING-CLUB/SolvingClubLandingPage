@@ -96,7 +96,7 @@ export const projects: Project[] = [
       'Saral Events User App is the customer-facing Flutter application in the Saral ecosystem. Users authenticate with email/Google, manage their profile and addresses, browse services across categories (catering, decor, venues, photography, etc.), build event plans with budgets and checklists, create shareable e‑invites, and complete bookings using Razorpay. The app talks directly to a shared Supabase backend (Postgres + Auth + Functions) and consumes deep/universal links from the landing site for invite previews and referrals.',
     technologies: ['Flutter', 'Dart', 'Supabase', 'Razorpay', 'Deep Links', 'Android', 'iOS'],
     liveSiteUrl: '#',
-    imageUrl: '/saral-events-user-app.jpeg',
+    imageUrl: '/Saraleventsuserapp1.png',
     status: 'ongoing',
     dateStart: '23 Apr 2025',
     appStore: 'https://apps.apple.com/app/saral-events-user',

@@ -119,7 +119,7 @@ export function ProjectDetail() {
                 <Dialog>
                   <DialogTrigger asChild>
                     <motion.button
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-white/20 text-black rounded-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] transition-shadow duration-300"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
