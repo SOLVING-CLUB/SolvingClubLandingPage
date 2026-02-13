@@ -23,26 +23,26 @@ export type Project = {
 };
 
 export const projects: Project[] = [
-  {
-    id: 1,
-    title: 'TRAVEL TOGETHER',
-    subtitle: 'Mobile App - Android',
-    category: 'Mobile App',
-    team: 'Team: 1',
-    date: 'Sep 2024',
-    badge: 'Client Project',
-    projectType: 'Client Project',
-    description:
-      'AI‑driven travel companion that builds smart itineraries and helps groups coordinate trips on the go.',
-    overview:
-      'Travel Together is an AI‑driven travel application that creates personalised trip itineraries and helps groups stay coordinated before and during travel. The app combines real‑time geolocation navigation, smart suggestions for places to visit, and shared schedules so every traveller knows where to be and when. A dedicated admin dashboard allows trip organisers to review routes, manage travellers, and adjust plans instantly. The backend is powered by Firebase and Firestore for secure authentication, reliable data storage, and real‑time updates, while AI integration personalises recommendations based on user preferences and travel history.',
-    technologies: ['Flutter', 'Dart', 'Firebase', 'Firestore', 'AI Integration'],
-    liveSiteUrl: '#',
-    status: 'ongoing',
-    dateStart: 'Sep 2024',
-    appStore: 'https://apps.apple.com/app/travel-together',
-    playStore: 'https://play.google.com/store/apps/details?id=com.traveltogether.app',
-  },
+  // {
+  //   id: 1,
+  //   title: 'TRAVEL TOGETHER',
+  //   subtitle: 'Mobile App - Android',
+  //   category: 'Mobile App',
+  //   team: 'Team: 1',
+  //   date: 'Sep 2024',
+  //   badge: 'Client Project',
+  //   projectType: 'Client Project',
+  //   description:
+  //     'AI‑driven travel companion that builds smart itineraries and helps groups coordinate trips on the go.',
+  //   overview:
+  //     'Travel Together is an AI‑driven travel application that creates personalised trip itineraries and helps groups stay coordinated before and during travel. The app combines real‑time geolocation navigation, smart suggestions for places to visit, and shared schedules so every traveller knows where to be and when. A dedicated admin dashboard allows trip organisers to review routes, manage travellers, and adjust plans instantly. The backend is powered by Firebase and Firestore for secure authentication, reliable data storage, and real‑time updates, while AI integration personalises recommendations based on user preferences and travel history.',
+  //   technologies: ['Flutter', 'Dart', 'Firebase', 'Firestore', 'AI Integration'],
+  //   liveSiteUrl: '#',
+  //   status: 'ongoing',
+  //   dateStart: 'Sep 2024',
+  //   appStore: 'https://apps.apple.com/app/travel-together',
+  //   playStore: 'https://play.google.com/store/apps/details?id=com.traveltogether.app',
+  // },
   {
     id: 2,
     title: 'SARAL EVENTS - WEBSITE',
@@ -58,7 +58,7 @@ export const projects: Project[] = [
       'Landing website for Saral Events built with Next.js 14 and Tailwind CSS. It acts as the public face of the platform, explaining how Saral simplifies event planning while hosting universal-link routes like /service/[id] and /invite/[slug] that deep‑link into the mobile apps. The site is optimised for SEO, performance, and clear CTAs to download the apps or start planning an event.',
     technologies: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Vercel'],
     liveSiteUrl: '#',
-    imageUrl: '/saral-events-landing.png',
+    imageUrl: '/saraleventswebsite1.png',
     status: 'ongoing',
     dateStart: '23 Apr 2025',
   },
@@ -117,7 +117,7 @@ export const projects: Project[] = [
       'Saral Events Vendor App is a dedicated Flutter application for service providers on the platform. Vendors onboard with KYC, configure the services they offer, manage availability and pricing, and respond to incoming bookings. The app provides a lightweight dashboard for orders, payouts, chat/support, and notifications so vendors can run their business from mobile while staying in sync with the shared Supabase backend and the admin portal.',
     technologies: ['Flutter', 'Dart', 'Supabase', 'Push Notifications'],
     liveSiteUrl: '#',
-    imageUrl: '/saral-events-vendor-app.jpeg',
+    imageUrl: '/SaraleventsVendorapp1.png',
     status: 'ongoing',
     dateStart: '23 Apr 2025',
     appStore: 'https://apps.apple.com/app/saral-events-vendor',
