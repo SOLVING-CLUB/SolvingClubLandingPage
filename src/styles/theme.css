@@ -128,11 +128,6 @@
     img {
       image-rendering: auto;
     }
-    
-    /* Reduce blur effects on mobile for better performance */
-    [class*="blur"] {
-      filter: blur(0.5rem) !important;
-    }
   }
 
   /**
