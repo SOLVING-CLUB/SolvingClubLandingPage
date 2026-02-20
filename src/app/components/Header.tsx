@@ -1,10 +1,10 @@
 "use client";
 import { useState, type ComponentType } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { Menu as MenuIcon, X, Home, Folder, User, Mail } from 'lucide-react';
-import { handleAnchorClick } from '@/app/components/ui/utils';
+import { motion } from 'motion/react';
+import { Menu as MenuIcon, Home, Folder, User, Mail } from 'lucide-react';
 import { cn } from '@/app/components/ui/utils';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/app/components/ui/sheet';
 
 type NavItem = {
   label: string;
@@ -122,11 +122,11 @@ export function Header() {
           <div className="flex items-center justify-between">
             <motion.a 
               href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate('/');
-              window.scrollTo({ top: 0, behavior: 'auto' });
-            }}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/');
+                window.scrollTo({ top: 0, behavior: 'auto' });
+              }}
               className="text-xl sm:text-2xl font-bold tracking-tight"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -136,55 +136,64 @@ export function Header() {
 
             <button
               className="text-foreground p-2 hover:bg-muted rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
+              <MenuIcon size={24} />
             </button>
           </div>
-
-          <AnimatePresence>
-            {isMobileMenuOpen && (
-              <motion.nav
-                className="mt-4 pb-4 flex flex-col gap-4"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {NAV_ITEMS.map((item) => {
-                  const active = isActivePath(item.path);
-                  return (
-                    <button
-                      key={item.path}
-                      type="button"
-                      className={cn(
-                        'text-left text-sm sm:text-base py-2',
-                        active ? 'text-foreground font-semibold' : 'text-muted-foreground hover:text-foreground'
-                      )}
-                      onClick={() => {
-                        navigate(item.path);
-                        setIsMobileMenuOpen(false);
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  );
-                })}
-                <button
-                  type="button"
-                  className="px-6 py-2.5 rounded-full text-center text-sm sm:text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all"
-                  onClick={() => {
-                    navigate('/contact');
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  Let's Talk
-                </button>
-              </motion.nav>
-            )}
-          </AnimatePresence>
         </div>
+
+        {/* Side Drawer Menu */}
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <SheetContent 
+            side="right" 
+            className="w-[65%] sm:w-[55%] bg-background/95 backdrop-blur-xl border-l border-border/50"
+          >
+            <SheetHeader className="text-left pb-6 border-b border-border/50">
+              <SheetTitle className="text-2xl font-bold">Menu</SheetTitle>
+            </SheetHeader>
+            
+            <nav className="flex flex-col gap-2 mt-8">
+              {NAV_ITEMS.map((item) => {
+                const Icon = item.icon;
+                const active = isActivePath(item.path);
+                return (
+                  <motion.button
+                    key={item.path}
+                    type="button"
+                    className={cn(
+                      'flex items-center gap-3 text-left px-4 py-4 rounded-xl transition-all',
+                      active 
+                        ? 'bg-primary/20 text-foreground font-semibold border border-primary/30' 
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    )}
+                    onClick={() => {
+                      navigate(item.path);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="text-base">{item.label}</span>
+                  </motion.button>
+                );
+              })}
+              
+              <motion.button
+                type="button"
+                className="mt-4 px-6 py-3.5 rounded-xl text-center text-base border border-primary/80 bg-gradient-to-b from-white/15 via-primary/90 to-primary text-primary-foreground shadow-[inset_0_1px_rgba(255,255,255,0.55)] hover:brightness-110 transition-all"
+                onClick={() => {
+                  navigate('/contact');
+                  setIsMobileMenuOpen(false);
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Let's Talk
+              </motion.button>
+            </nav>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );
